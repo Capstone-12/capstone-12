@@ -1,0 +1,49 @@
+---
+- name: set up the instance
+  hosts: all
+  become_user: root 
+  #remote_user: ubuntu 
+  become: yes
+
+  tasks:
+  - name: Copy file
+    copy:
+      src: ~/capstone/setup.sh
+      dest: "/home/ubuntu"
+
+  - name: chmod 
+    shell: sudo chmod +x setup.sh 
+
+  - name: execute 
+    shell: sh setup.sh .      
+
+  - name: Updating Docker cgroup on Master Node
+    copy:
+      dest: /etc/docker/daemon.json
+      content: |
+        {
+          "exec-opts": ["native.cgroupdriver=systemd"]
+        }
+
+  - name: Restart docker on Master Node
+    service:
+     name: docker
+     state: restarted    
+
+  - name: rm containerd
+    shell: sudo rm /etc/containerd/config.toml
+
+  - name: restart 
+    shell: sudo systemctl restart containerd 
+
+  - name: Initializing k8s cluster
+    command: kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem
+    when: inventory_hostname in groups['server1']
+  
+  - name: Setting up kubectl on Master Node
+    shell:
+     cmd: |
+      mkdir -p $HOME/.kube
+      sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+      sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    when: inventory_hostname in groups['server1']
