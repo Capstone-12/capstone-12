@@ -1,0 +1,48 @@
+# ---
+# - name: set up the instance
+#   hosts: all
+#   become_user: root 
+#   become: yes
+
+#   tasks:
+#   - name: Copy file to remote host
+#     copy:
+#       src: ~/mnt/c/Users/teslim/Desktop/AltSchool_Cloud/capstone/capstone-12/bash/deploy.sh
+#       dest: "/home/ubuntu"
+
+#   - name: chmod file 
+#     shell: sudo chmod +x deploy.sh 
+
+#   - name: execute script 
+#     shell: sh deploy.sh .      
+
+#   - name: Updating Docker cgroup on Master Node
+#     copy:
+#       dest: /etc/docker/daemon.json
+#       content: |
+#         {
+#           "exec-opts": ["native.cgroupdriver=systemd"]
+#         }
+
+#   - name: Restart docker on Master Node 
+#     service:
+#      name: docker
+#      state: restarted    
+
+#   - name: rm containerd config file on Master Node
+#     shell: sudo rm /etc/containerd/config.toml
+
+#   - name: Restart containerd on Master Node 
+#     shell: sudo systemctl restart containerd 
+
+#   - name: Initializing k8s cluster on Master Node
+#     command: kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem
+#     when: inventory_hostname in groups['server1']
+  
+#   - name: Setting up kubectl on Master Node 
+#     shell:
+#      cmd: |
+#       mkdir -p $HOME/.kube
+#       sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#       sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#     when: inventory_hostname in groups['server1']
