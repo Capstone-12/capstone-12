@@ -1,80 +1,108 @@
-# EKS Cluster
-resource "aws_eks_cluster" "tes-eks-cluster" {
-  name     = "${var.project}-cluster"
-  role_arn = aws_iam_role.cluster.arn
-  version  = "1.25"
+#creating kubernetes cluster 
+resource "aws_eks_cluster" "Alt-eks" {
+  name     = "Alt-eks"
+  role_arn = aws_iam_role.eks_cluster-role.arn
 
   vpc_config {
-    # security_group_ids      = [aws_security_group.eks_cluster.id, aws_security_group.eks_nodes.id]
-    subnet_ids              = flatten([aws_subnet.public[*].id, aws_subnet.private[*].id])
-    endpoint_private_access = true
-    endpoint_public_access  = true
-    public_access_cidrs     = ["0.0.0.0/0"]
+    subnet_ids = [aws_subnet.eks_private_subnet_1.id, aws_subnet.eks_private_subnet_2.id]
   }
 
-  tags = merge(
-    var.tags
-  )
-
-  depends_on = [
-    aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy
-  ]
-}
-
-
-# EKS Cluster IAM Role
-resource "aws_iam_role" "cluster" {
-  name = "${var.project}-Cluster-Role"
-
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "eks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-POLICY
-}
-
-resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster.name
-}
-
-
-# EKS Cluster Security Group
-resource "aws_security_group" "eks_cluster" {
-  name        = "${var.project}-cluster-sg"
-  description = "Cluster communication with worker nodes"
-  vpc_id      = aws_vpc.tes-vpc.id
+  depends_on = [aws_iam_role_policy_attachment.eks_cluster-policy]
 
   tags = {
-    Name = "${var.project}-cluster-sg"
+    Terraform   = "true"
+    Environment = "dev"
   }
 }
 
-resource "aws_security_group_rule" "cluster_inbound" {
-  description              = "Allow worker nodes to communicate with the cluster API Server"
-  from_port                = 443
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.eks_cluster.id
-  source_security_group_id = aws_security_group.eks_nodes.id
-  to_port                  = 443
-  type                     = "ingress"
+# Create an IAM role for the EKS cluster
+resource "aws_iam_role" "eks_cluster-role" {
+  name = "eks_cluster-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "eks.amazonaws.com"
+        }
+      }
+    ]
+  })
 }
 
-resource "aws_security_group_rule" "cluster_outbound" {
-  description              = "Allow cluster API Server to communicate with the worker nodes"
-  from_port                = 1024
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.eks_cluster.id
-  source_security_group_id = aws_security_group.eks_nodes.id
-  to_port                  = 65535
-  type                     = "egress"
+# Attach an IAM policy to the EKS cluster role
+resource "aws_iam_role_policy_attachment" "eks_cluster-policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.eks_cluster-role.name
 }
+
+# Create the worker node group
+resource "aws_eks_node_group" "Eks-node_group" {
+  cluster_name    = aws_eks_cluster.Alt-eks.name
+  node_group_name = "example-node-group"
+
+  node_role_arn  = aws_iam_role.eks_node_group-role.arn
+  instance_types = ["t3.medium"]
+
+  scaling_config {
+    desired_size = 2
+    max_size     = 3
+    min_size     = 1
+  }
+
+  remote_access {
+    ec2_ssh_key               = "project"
+    source_security_group_ids = [aws_security_group.eks_sg.id]
+  }
+
+  subnet_ids = [aws_subnet.eks_private_subnet_1.id, aws_subnet.eks_private_subnet_2.id]
+
+  depends_on = [aws_iam_role_policy_attachment.eks_node_group-policy]
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
+
+# Create an IAM role for the worker nodes
+resource "aws_iam_role" "eks_node_group-role" {
+  name = "eks-node-group-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+# Attach an IAM policy to the worker node role
+resource "aws_iam_role_policy_attachment" "eks_node_group-policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.eks_node_group-role.name
+}
+
+#Attach additional IAM policies to the worker node role if needed
+resource "aws_iam_role_policy_attachment" "eks_node_group_cni" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks_node_group-role.name
+}
+
+
+
+resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.eks_node_group-role.name
+}
+
+
