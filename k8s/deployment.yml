@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: capstone-12
+  name: capstone
   labels:
-    app: capstone-12
+    app: capstone
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: capstone-12
+      app: capstone
   template:
     metadata:
       labels:
-        app: capstone-12
+        app: capstone
     spec:
       containers:
-        - name: capstone-12
-          image: 123456789012.dkr.ecr.eu-west-1.amazonaws.com/capstone-12:1.0
+        - name: capstone
+          image: 123456789012.dkr.ecr.eu-west-1.amazonaws.com/capstone;latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
