@@ -52,13 +52,14 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: capstone-12
-        IMAGE_TAG: latest
+        IMAGE_TAG: 1.2
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
         docker-compose build
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        docker tag capstone-12:latest $ECR_REGISTRY/$ECR_REPOSITORY:1.2
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:1.2
 
     - name: Update Kube config
       run: aws eks update-kubeconfig --name capstone-12 --region eu-west-1
