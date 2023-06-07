@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+# Ngo app
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/usr/scr/app
+    image: capstone
+    container_name: Ngo-app
+    restart: unless-stopped
+    environment:
+     - DB_HOST=mongo-db
+     - DB_PORT=27017 
+     - DB_USER=admin
+     - DB_PASS=password 
+     - DB_NAME=admin 
+    depends_on:
+      - mongo-db
+    networks:
+      - ngo-app
+
+  # Mongodb database
+  mongo-db:
+    container_name: capstone-mongodb
+    image: mongo:latest
+    restart: always
+    environment:
+     - MONGO_INITDB_ROOT_USERNAME=admin
+     - MONGO_INITDB_ROOT_PASSWORD=password
+     - MONGO_INITDB_DATABASE=admin
+     - MONGODB_URI=mongodb://mongo-db:27017
+    ports:
+        - "27017:27017"
+    volumes:
+     - mongo-data:/data/db
+    networks:
+      - ngo-app
+
+
+
+
+volumes:
+  mongo-data: {}
+
+networks:
+  ngo-app:
