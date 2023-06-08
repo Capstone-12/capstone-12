@@ -14,7 +14,7 @@ spec:
     spec:
     containers:
         - name: capstone
-          image: your-docker-hub-username/capstone:latest
+          image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
           ports:
             - containerPort: 8080
           env:

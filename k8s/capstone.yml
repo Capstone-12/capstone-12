@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: Ngo-app
+  name: Ngo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Ngo-app
+  template:
+    metadata:
+      labels:
+        app: Ngo-app
+    spec:
+    containers:
+      - image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
+        name: Ngo-app
+        environment:
+          - DB_HOST=mongo-db
+          - DB_PORT=27017 
+          - DB_USER=admin
+          - DB_PASS=password
+          - DB_NAME=admin 
+        restart: unless-stopped
+        ports:
+        - containerPort: 8080
+          name: Ngo-app
+  volumes:
+      - name: Ngo-app-data
+        emptyDir: {} 
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: Ngo-app
+  name: Ngo-app
+spec:  
+  type: LoadBalancer
+  ports:
+  - name: "Ngo-app-service"
+    port: 80
+    targetPort: 8080
+  selector:
+    app: Ngo-app

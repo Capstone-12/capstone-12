@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mongo-db
+  name: mongo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-db
+  template:
+    metadata:
+      labels:
+        app: mongo-db
+  spec:
+      restartPolicy: Always
+  containers:
+      - image: mongo:latest
+        name: mongo-db
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: password
+          MONGO_INITDB_DATABASE: admin
+          MONGODB_URI: mongodb://mongo-db:27017
+        restart: always 
+        ports:
+        - containerPort: 27017
+          name: mongo-db
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-db-data
+  volumes:
+      - name: mongo-db-data
+        emptyDir: {} 
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongo-db
+  name: mongo-db
+spec:
+#  type: ClusterIP
+  ports:
+  - name: mongo-db
+    port: 27017
+    targetPort: 27017
+  selector:
+    app: mongo-db
+
+
+# image: frontend-image
+#     env: [{name: DB_HOST, value: mongodb}]
