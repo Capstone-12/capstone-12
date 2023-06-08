@@ -14,7 +14,7 @@ spec:
       labels:
         app: webapp
     spec:
-      containers:
+    containers:
       - name: webapp
         image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
         ports:
