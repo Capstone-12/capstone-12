@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: capstone
-          image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:1.2
+          image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
           ports:
             - containerPort: 8080
           env:
