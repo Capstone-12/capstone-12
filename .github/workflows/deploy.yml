@@ -95,7 +95,7 @@ jobs:
           ECR_REPOSITORY: capstone-12
           IMAGE_TAG: latest
         run: |
-          docker-compose build
+          docker-compose up
           docker tag capstone:latest 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
           docker push 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
 
