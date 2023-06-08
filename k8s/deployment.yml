@@ -1,43 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: capstone-app
+  name: webapp-deployment
+  labels:
+    app: webapp
 spec:
-  replicas: 3 
+  replicas: 2
   selector:
     matchLabels:
-      app: capstone
+      app: webapp
   template:
     metadata:
       labels:
-        app: capstone
+        app: webapp
     spec:
       containers:
-        - name: capstone
-          image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
-          ports:
-            - containerPort: 8080
-          env:
-            - name: DB_HOST
-              value: mongo-db
-            - name: DB_PORT
-              value: "27017"
-            - name: DB_USER
-              value: admin
-            - name: DB_PASS
-              value: password
-            - name: DB_NAME
-              value: admin
-        - name: mongo-db
-          image: mongo:latest
-          ports:
-            - containerPort: 27017
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              value: admin
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              value: password
-            - name: MONGO_INITDB_DATABASE
-              value: admin
-            - name: MONGODB_URI
-              value: mongodb://mongo-db:27017
+      - name: webapp
+        image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
+        ports:
+        - containerPort: 8080
+        # - name: USER_NAME
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: mongo-secret
+        #       key: mongo-user
+        # - name: USER_PWD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: mongo-secret
+        #       key: mongo-password 
+        # - name: DB_URL
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: mongo-config
+        #       key: mongo-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
