@@ -27,9 +27,9 @@ spec:
         ports:
         - containerPort: 8080
           name: ngo-app
-  volumes:
-      - name: ngo-app-data
-        emptyDir: {} 
+  # volumes:
+  #     - name: ngo-app-data
+  #       emptyDir: {} 
 
 ---
 
