@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: Ngo-app
-  name: Ngo-app
+    app: ngo-app
+  name: ngo-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Ngo-app
+      app: ngo-app
   template:
     metadata:
       labels:
-        app: Ngo-app
+        app: ngo-app
     spec:
       containers:
-      - name: Ngo-app
+      - name: ngo-app
         image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest 
-        environment:
+        env:
           - name: DB_HOST
             value: mongo-db
           - name: DB_PORT
@@ -28,23 +28,23 @@ spec:
             value: password
           - name: DB_NAME
             value: admin
-        restart: unless-stopped
         ports:
         - containerPort: 8080
-          name: Ngo-app
-          
+          name: ngo-app
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: Ngo-app
-  name: Ngo-app
+    app: ngo-app
+  name: ngo-app
 spec:
   type: LoadBalancer
   ports:
-    - name: "Ngo-app-service"
+    - name: "ngo-app-service"
       port: 80
-      targetPort: 8080
+      targetPort: ngo-app
   selector:
-    app: Ngo-app
+    app: ngo-app
+
