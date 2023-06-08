@@ -54,7 +54,7 @@ resource "aws_eks_node_group" "Eks-node_group" {
   }
 
   remote_access {
-    ec2_ssh_key               = "project"
+    ec2_ssh_key               = "nginx"
     source_security_group_ids = [aws_security_group.eks_sg.id]
   }
 
