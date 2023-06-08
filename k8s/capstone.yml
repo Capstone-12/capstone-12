@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: Ngo-app
-  name: Ngo-app
+    app: ngo-app
+  name: ngo-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Ngo-app
+      app: ngo-app
   template:
     metadata:
       labels:
-        app: Ngo-app
+        app: ngo-app
     spec:
     containers:
       - image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
-        name: Ngo-app
+        name: ngo-app
         environment:
           - DB_HOST=mongo-db
           - DB_PORT=27017 
@@ -26,9 +26,9 @@ spec:
         restart: unless-stopped
         ports:
         - containerPort: 8080
-          name: Ngo-app
+          name: ngo-app
   volumes:
-      - name: Ngo-app-data
+      - name: ngo-app-data
         emptyDir: {} 
 
 ---
@@ -37,13 +37,13 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: Ngo-app
-  name: Ngo-app
+    app: ngo-app
+  name: ngo-app
 spec:  
   type: LoadBalancer
   ports:
-  - name: "Ngo-app-service"
+  - name: "ngo-app-service"
     port: 80
     targetPort: 8080
   selector:
-    app: Ngo-app
+    app: ngo-app
