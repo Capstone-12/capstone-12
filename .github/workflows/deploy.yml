@@ -61,11 +61,15 @@ jobs:
         run: |
          sudo apt-get update
          sudo apt-get install curl
+      - name: install aws cli
+        run: |
+         sudo apt-get update
+         sudo apt-get install awscli
 
       - name: install kubectl
         run: |
          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          sudo install kubectl /usr/local/bin/
+         sudo install kubectl /usr/local/bin/
 
       # - name: Install Kubectl
       #   uses: azure/setup-kubectl@v3.0
