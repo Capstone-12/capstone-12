@@ -55,13 +55,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Install Kubectl
-        uses: azure/setup-kubectl@v3.0
-        with:
-          version: '1.24.0'
-        id: install
+      # - name: Install Kubectl
+      #   uses: azure/setup-kubectl@v3.0
+      #   with:
+      #     version: '1.24.0'
+      #   id: install
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -79,16 +79,16 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: capstone-12
-          IMAGE_TAG: 1.2
+          IMAGE_TAG: latest
         run: |
           docker-compose build
-          docker tag capstone:1.2 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:1.2
-          docker push 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:1.2
+          docker tag capstone:latest 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
+          docker push 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
 
-      - name: Update Kube config
-        run: aws eks update-kubeconfig --name Alt-eks --region eu-west-2
+      # - name: Update Kube config
+      #   run: aws eks update-kubeconfig --name Alt-eks --region eu-west-2
 
-      - name: Deploy to Amazon EKS
-        run: |
-          kubectl apply -f k8s/deployment.yml
-          kubectl apply -f k8s/service.yml
+      # - name: Deploy to Amazon EKS
+      #   run: |
+      #     kubectl apply -f k8s/deployment.yml
+      #     kubectl apply -f k8s/service.yml
