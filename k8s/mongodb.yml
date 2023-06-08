@@ -24,12 +24,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: mongo-user
+              key: DB_USER
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: mongo-password  
+              key: DB_PASS  
 ---
 apiVersion: v1
 kind: Service
