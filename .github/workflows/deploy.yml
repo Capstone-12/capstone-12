@@ -105,4 +105,4 @@ jobs:
       - name: Deploy to Amazon EKS
         run: |
           kubectl apply -f k8s/deployment.yml
-          kubectl apply -f k8s/service.yml
+          kubectl apply -f k8s/mongodb.yml
