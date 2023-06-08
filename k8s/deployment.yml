@@ -19,16 +19,12 @@ spec:
         image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
         ports:
         - containerPort: 8080
-        - name: USER_NAME
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: DB_USER
-        - name: USER_PWD
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: DB_PASS
+        env:
+
+        - name: DB_USER
+          value: admin
+        - name: DB_PASS
+          value: password
         - name: DB_HOST
           valueFrom:
             configMapKeyRef:
