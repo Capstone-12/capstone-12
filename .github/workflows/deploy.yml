@@ -104,5 +104,8 @@ jobs:
 
       - name: Deploy to Amazon EKS
         run: |
+          kubectl apply -f k8s/mongo-config.yml
+          kubectl apply -f k8s/mongo-secret.yml
           kubectl apply -f k8s/deployment.yml
           kubectl apply -f k8s/mongodb.yml
+          
