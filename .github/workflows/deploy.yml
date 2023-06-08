@@ -1,112 +1,104 @@
-name: Terraform and Deploy to EKS
+# name: Terraform and Deploy to EKS
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
 
-# permissions:
-#   contents: read
+# env:
+#   AWS_REGION: eu-west-2
+#   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-env:
-  AWS_REGION: eu-west-2
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+# jobs:
+#   terraform:
+#     name: Terraform
+#     runs-on: ubuntu-latest
+#     environment: production
 
-jobs:
-  terraform:
-    name: Terraform
-    runs-on: ubuntu-latest
-    environment: production
+#     defaults:
+#       run:
+#         shell: bash
 
-    defaults:
-      run:
-        shell: bash
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#       - name: Setup Terraform
+#         uses: hashicorp/setup-terraform@v1
+#         with:
+#           terraform_version: 1.4.6
+#           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.4.6
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#       - name: Terraform Init
+#         run: terraform init
 
-      - name: Terraform Init
-        run: terraform init
+#       - name: Terraform Format
+#         run: terraform fmt -check
 
-      - name: Terraform Format
-        run: terraform fmt -check
+#       - name: Terraform Plan
+#         run: terraform plan -input=false
 
-      # - name: Terraform Plan
-      #   run: terraform plan -input=false
+#       - name: Terraform Apply
+#         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#         run: terraform apply -auto-approve -input=false
 
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: terraform apply -auto-approve -input=false
+#       # - name: Terraform Destroy
+#       #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#       #   run: terraform destroy -auto-approve -input=false
 
-      - name: Terraform Destroy
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform destroy -auto-approve -input=false
+#   deploy:
+#     name: Deploy to Amazon EKS
+#     needs: terraform
+#     runs-on: ubuntu-latest
+#     environment: production
 
-  # deploy:
-  #   name: Deploy to Amazon EKS
-  #   needs: terraform
-  #   runs-on: ubuntu-latest
-  #   environment: production
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
       
-  #     - name: Install curl
-  #       run: |
-  #        sudo apt-get update
-  #        sudo apt-get install curl
-  #     - name: install aws cli
-  #       run: |
-  #        sudo apt-get update
-  #        sudo apt-get install awscli
+#       - name: Install curl
+#         run: |
+#          sudo apt-get update
+#          sudo apt-get install curl
+#       - name: install aws cli
+#         run: |
+#          sudo apt-get update
+#          sudo apt-get install awscli
 
-  #     - name: install kubectl
-  #       run: |
-  #        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-  #        sudo install kubectl /usr/local/bin/
+#       - name: install kubectl
+#         run: |
+#          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#          sudo install kubectl /usr/local/bin/
 
-  #     # - name: Install Kubectl
-  #     #   uses: azure/setup-kubectl@v3.0
-  #     #   with:
-  #     #     version: '1.24.0'
-  #     #   id: install
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: eu-west-2
 
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: eu-west-2
+#       - name: Login to Amazon ECR
+#         id: login-ecr
+#         uses: aws-actions/amazon-ecr-login@v1
 
-  #     - name: Login to Amazon ECR
-  #       id: login-ecr
-  #       uses: aws-actions/amazon-ecr-login@v1
+#       - name: Build, tag, and push image to Amazon ECR
+#         id: build-image
+#         env:
+#           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#           ECR_REPOSITORY: capstone-12
+#           IMAGE_TAG: latest
+#         run: |
+#           docker-compose up -d
+#           docker tag capstone:latest 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
+#           docker push 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
 
-  #     - name: Build, tag, and push image to Amazon ECR
-  #       id: build-image
-  #       env:
-  #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-  #         ECR_REPOSITORY: capstone-12
-  #         IMAGE_TAG: latest
-  #       run: |
-  #         docker-compose up -d
-  #         docker tag capstone:latest 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
-  #         docker push 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
+#       - name: Update Kube config
+#         run: aws eks update-kubeconfig --name Alt-eks --region eu-west-2
 
-  #     - name: Update Kube config
-  #       run: aws eks update-kubeconfig --name Alt-eks --region eu-west-2
-
-  #     - name: Deploy to Amazon EKS
-  #       run: |
-  #         kubectl apply -f k8s/newapp.yml
+#       - name: Deploy to Amazon EKS
+#         run: |
+#           kubectl apply -f k8s/deployment.yml
+#           kubectl apply -f k8s/service.yml
           
