@@ -86,7 +86,7 @@ jobs:
           docker push 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:1.2
 
       - name: Update Kube config
-        run: aws eks update-kubeconfig --name capstone-12 --region eu-west-1
+        run: aws eks update-kubeconfig --name Alt-eks --region eu-west-1
 
       - name: Deploy to Amazon EKS
         run: |
