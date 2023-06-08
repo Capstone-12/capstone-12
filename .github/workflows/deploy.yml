@@ -56,6 +56,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
+      - name: Install curl
+        run: |
+         sudo apt-get update
+         sudo apt-get install curl
+
+      - name: install kubectl
+        run: |
+         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install kubectl /usr/local/bin/
 
       # - name: Install Kubectl
       #   uses: azure/setup-kubectl@v3.0
@@ -85,10 +95,10 @@ jobs:
           docker tag capstone:latest 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
           docker push 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
 
-      # - name: Update Kube config
-      #   run: aws eks update-kubeconfig --name Alt-eks --region eu-west-2
+      - name: Update Kube config
+        run: aws eks update-kubeconfig --name Alt-eks --region eu-west-2
 
-      # - name: Deploy to Amazon EKS
-      #   run: |
-      #     kubectl apply -f k8s/deployment.yml
-      #     kubectl apply -f k8s/service.yml
+      - name: Deploy to Amazon EKS
+        run: |
+          kubectl apply -f k8s/deployment.yml
+          kubectl apply -f k8s/service.yml
