@@ -18,11 +18,16 @@ spec:
       - image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
         name: ngo-app
         environment:
-          - DB_HOST=mongo-db
-          - DB_PORT=27017 
-          - DB_USER=admin
-          - DB_PASS=password
-          - DB_NAME=admin 
+          - name: DB_HOST
+            value: mongo-db
+          - name: DB_PORT
+            value: 27017 
+          - name: DB_USER
+            value: admin
+          - name: DB_PASS
+            value: password
+          - name: DB_NAME
+            value: admin 
         restart: unless-stopped
         ports:
         - containerPort: 8080
