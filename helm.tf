@@ -34,9 +34,9 @@ resource "helm_release" "nginix-ingress" {
   version    = "4.5.2"
 }
 
-# resource "null_resource" "get_nlb_hostname" {
-#   depends_on = [helm_release.nginix-ingress]
-#   provisioner "local-exec" {
-#     command = "aws eks update-kubeconfig --name Alt-eks --region us-east-1 && kubectl get svc nginix-ingress-ingress-nginx-controller  --namespace ingress -o jsonpath='{.status.loadBalancer.ingress[*].hostname}' > ${path.module}/lb_hostname.txt"
-#   }
-# }
+ resource "null_resource" "get_nlb_hostname" {
+   depends_on = [helm_release.nginix-ingress]
+   provisioner "local-exec" {
+     command = "aws eks update-kubeconfig --name Alt-eks --region us-east-1 && kubectl get svc nginix-ingress-ingress-nginx-controller  --namespace ingress -o jsonpath='{.status.loadBalancer.ingress[*].hostname}' > ${path.module}/lb_hostname.txt"
+   }
+ }

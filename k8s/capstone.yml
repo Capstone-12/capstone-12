@@ -40,7 +40,7 @@ metadata:
     app: ngo-app
   name: ngo-app
 spec:
-  type: LoadBalancer
+  type: NodePort 
   ports:
     - name: "ngo-app-service"
       port: 80
