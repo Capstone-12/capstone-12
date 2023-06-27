@@ -1,5 +1,6 @@
 {
     "yaml.schemas": {
-        "https://json.schemastore.org/github-workflow.json": "file:///c%3A/Users/teslim/Desktop/AltSchool_Cloud/capstone/capstone-12/.github/workflows/deploy.yml"
+        "https://json.schemastore.org/github-workflow.json": "file:///c%3A/Users/teslim/Desktop/AltSchool_Cloud/capstone/capstone-12/.github/workflows/deploy.yml",
+        "kubernetes://schema/v1%40service": "file:///c%3A/Users/teslim/Desktop/AltSchool_Cloud/capstone/capstone-12/k8s/capstone.yml"
     }
 }
