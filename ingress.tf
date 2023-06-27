@@ -3,7 +3,7 @@
 }
 
 
- resource "kubernetes_ingress_v1" "microservice" {
+ resource "kubernetes_ingress_v1" "ngo" {
     depends_on = [helm_release.nginix-ingress]
   metadata {
     name = "ngo"

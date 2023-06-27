@@ -1,17 +1,17 @@
 resource "aws_route53_zone" "korede" {
   name = var.domain_name
- lifecycle {
-  prevent_destroy = false
-}
+ #lifecycle {
+  #prevent_destroy = false
+#}
 
 }
 
 
-resource "aws_route53_record" "voting" {
-  depends_on = [kubernetes_ingress_v1.voting, data.local_file.lb_hostname]
+resource "aws_route53_record" "ngo" {
+  depends_on = [kubernetes_ingress_v1.ngo, data.local_file.lb_hostname]
   zone_id = data.aws_route53_zone.example.zone_id  
 
-  name    = "voting"
+  name    = "ngo"
   type    = "CNAME"
   ttl     = "300"
 
@@ -20,7 +20,7 @@ resource "aws_route53_record" "voting" {
 
 
 resource "aws_route53_record" "grafana" {
-  depends_on = [kubernetes_ingress_v1.microservice, data.local_file.lb_hostname]
+  depends_on = [kubernetes_ingress_v1.ngo, data.local_file.lb_hostname]
   zone_id = data.aws_route53_zone.example.zone_id   
 
   name    = "grafana" 
@@ -32,7 +32,7 @@ resource "aws_route53_record" "grafana" {
 
 
 resource "aws_route53_record" "prometheus" {
-  depends_on = [kubernetes_ingress_v1.microservice, data.local_file.lb_hostname]
+  depends_on = [kubernetes_ingress_v1.ngo, data.local_file.lb_hostname]
   zone_id = data.aws_route53_zone.example.zone_id   
 
   name    = "prometheus" 
