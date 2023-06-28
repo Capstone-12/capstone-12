@@ -40,11 +40,11 @@ metadata:
     app: ngo-app
   name: ngo-app
 spec:
-  type: NodePort 
+  #type: NodePort 
   ports:
     - name: "ngo-app-service"
       port: 80
-      targetPort: ngo-app
+      targetPort: 8080
   selector:
     app: ngo-app
 
