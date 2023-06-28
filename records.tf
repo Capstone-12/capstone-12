@@ -12,7 +12,7 @@ resource "aws_route53_zone" "korede" {
 
 
 resource "aws_route53_record" "ngo" {
-  depends_on = [kubernetes_ingress_v1.ngo, data.local_file.lb_hostname]
+  depends_on = [data.local_file.lb_hostname]
   zone_id = data.aws_route53_zone.example.zone_id  
 
   name    = "ngo"
@@ -24,7 +24,7 @@ resource "aws_route53_record" "ngo" {
 
 
 resource "aws_route53_record" "grafana" {
-  depends_on = [kubernetes_ingress_v1.ngo, data.local_file.lb_hostname]
+  depends_on = [data.local_file.lb_hostname]
   zone_id = data.aws_route53_zone.example.zone_id   
 
   name    = "grafana" 
@@ -36,7 +36,7 @@ resource "aws_route53_record" "grafana" {
 
 
 resource "aws_route53_record" "prometheus" {
-  depends_on = [kubernetes_ingress_v1.ngo, data.local_file.lb_hostname]
+  depends_on = [data.local_file.lb_hostname]
   zone_id = data.aws_route53_zone.example.zone_id   
 
   name    = "prometheus" 
