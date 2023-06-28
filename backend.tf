@@ -3,6 +3,6 @@ terraform {
   backend "s3" {
     bucket = "capstonegithub12"
     key    = "terraform.tfstate"
-    region = "us-east-1"
+    region = "eu-west-2"
   }
 }
