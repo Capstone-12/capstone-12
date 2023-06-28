@@ -18,10 +18,10 @@ data "local_file" "lb_hostname" {
   depends_on = [null_resource.get_nlb_hostname]
 }
 
-#data "aws_route53_zone" "example" {
- # depends_on = [aws_route53_zone.korede]
- #ame = "korede.me"
-#}
+data "aws_route53_zone" "example" {
+  depends_on = [aws_route53_zone.korede]
+ name = "korede.me"
+}
 
 
 
