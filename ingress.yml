@@ -8,7 +8,7 @@ metadata:
     #cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-  - host: ngo.basils.live
+  - host: ngo.korede.me
     http:
       paths:
       - pathType: Prefix
@@ -35,7 +35,7 @@ metadata:
     #cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-  - host: grafana.basils.live
+  - host: grafana.korede.me
     http:
       paths:
       - pathType: Prefix
@@ -62,7 +62,7 @@ metadata:
     #cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-  - host: prometheus.basils.live
+  - host: prometheus.korede.me
     http:
       paths:
       - pathType: Prefix
