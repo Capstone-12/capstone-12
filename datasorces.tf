@@ -20,7 +20,7 @@ data "local_file" "lb_hostname" {
 
 data "aws_route53_zone" "example" {
   depends_on = [aws_route53_zone.korede]
- name = "korede.me"
+ name = "basils.live"
 }
 
 
