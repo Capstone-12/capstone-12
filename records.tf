@@ -1,3 +1,7 @@
+ variable "domain_name" {
+   default = "basils.live"
+}
+
 resource "aws_route53_zone" "korede" {
   name = var.domain_name
  #lifecycle {
