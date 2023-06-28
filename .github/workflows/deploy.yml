@@ -101,4 +101,4 @@ jobs:
        # run: |
         #  kubectl apply -f k8s/capstone.yml
          # kubectl apply -f k8s/mongodb.yml
-          
+         # kubectl apply -f ingress.yml 
