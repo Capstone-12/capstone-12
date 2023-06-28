@@ -1,5 +1,5 @@
  variable "domain_name" {
-   default = "basils.live"
+   default = "korede.me"
 }
 
 resource "aws_route53_zone" "korede" {
