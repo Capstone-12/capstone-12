@@ -38,13 +38,13 @@ kind: Service
 metadata:
   labels:
     app: ngo-app
-  name: ngo-app
+  name: ngo-app-service
   annotations:
         prometheus.io/scrape: 'true'
 spec:
   #type: NodePort 
   ports:
-    - name: "ngo-app-service"
+    - name: ngo-app-service
       port: 80
       targetPort: 8080
   selector:
