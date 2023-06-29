@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ngo-app
-        image: 277285677846.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest 
+        image: 336078645485.dkr.ecr.eu-west-2.amazonaws.com/capstone:latest
         env:
           - name: DB_HOST
             value: mongo-db
