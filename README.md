@@ -74,8 +74,12 @@ The deployment process involved the following steps:
 6. Monitoring and Logging: Setting up Prometheus for monitoring application metrics and grafana for visualization of the metrics.
 7. Documentation: Documenting the deployment process, including infrastructure setup, configuration steps, and troubleshooting guidelines.
 
+### Every code both terraform, git workflows, kubernetes manifests are all found in this repository folders, all well labelled for easy understanding and deployment, they are written declaratively, therefore making it reusable.
+To deploy the app with the configurations already set up here, fork this repo: https://github.com/Capstone-12/ and 
+
 # Architectural design
-![cappi drawio](https://github.com/Capstone-12/capstone-12/assets/99274632/6a3d63ea-ee15-4c41-b865-ee27f6b74404)
+
+![WhatsApp Image 2023-06-30 at 15 48 35](https://github.com/Capstone-12/capstone-12/assets/99274632/4f176385-c871-4f3c-95b4-0661b6b924c5)
 
 # Deployed Application
 ### Backend
