@@ -1,5 +1,5 @@
 # Capstone Project Documentation: 
-## School Open Source App Deployment
+## NGO School App Deployment
 ### Table of Contents
 
 1. Introduction
@@ -11,24 +11,23 @@
 7. Technologies
 8. Deployment Process
 9. Best Practices Implemented
-10. Challenges Faced
-11. Lessons Learned
-12. Conclusion
-13. Acknowledgments
+10. Lessons Learned
+11. Conclusion
+12. Acknowledgments
 
 
 # Introduction
 This document serves as the documentation for the capstone project conducted by group 12 of the Alt School Cloud Engineering Students. The primary objective of this project was to deploy a school open-source app while incorporating best practices in the deployment process. The app aimed to provide essential features for managing various aspects of a school's operations.
 
 # Project Overview
-The project focused on deploying a school open-source app that would enhance the management of student information, course schedules, attendance tracking, and other administrative tasks. The app aimed to streamline processes, improve efficiency, and provide a user-friendly interface for administrators, teachers, and students allowing for volunteers to sign up to teach and also donate funds for the NGO.
+The project focused on deploying a school NGO app that would enhance the management of student information, course schedules, attendance tracking, and other administrative tasks. The app aimed to streamline processes, improve efficiency, and provide a user-friendly interface for administrators, teachers, and students allowing for volunteers to sign up to teach and also donate funds for the NGO.
 
 # Team Members
-1. CI/CD TEAM: Bukola Testimony, Faboya Korede
-2. FINOPS TEAM: George Onoja, Akunne Chidi
+1. CI/CD TEAM: Bukola Testimony, Faboya Korede, Salu Teslim
+2. FINOPS TEAM: George Omoja, Akunne Chidi
 3. INFRASTRUCTURE TEAM: Salu Teslim, Gladys Oviawe, Kyazike Samaka Gloria
 4. SRE TEAM: Faboya Korede, Omokolade Adelekan
-5. TECHNICAL WRITING: Gladys Oviawe
+5. TECHNICAL WRITING: Gladys Oviawe, Osarobe Divine
 
 # Project Goals and Objectives
 
@@ -78,12 +77,10 @@ The deployment process involved the following steps:
 # Architectural design
 ![cappi drawio](https://github.com/Capstone-12/capstone-12/assets/99274632/6a3d63ea-ee15-4c41-b865-ee27f6b74404)
 
-
-# Challenges Faced
+# Deployed Application
 
 
 # Lessons Learned
-
 The project provided valuable learning opportunities for the team members. Key lessons learned include:
 
 1. Importance of Collaboration: Effective communication and collaboration are crucial for successful project execution, particularly in cross-functional teams.
