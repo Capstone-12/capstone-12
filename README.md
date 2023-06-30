@@ -15,7 +15,7 @@
 11. Lessons Learned
 12. Conclusion
 13. Acknowledgments
-14. References
+
 
 # Introduction
 This document serves as the documentation for the capstone project conducted by group 12 of the Alt School Cloud Engineering Students. The primary objective of this project was to deploy a school open-source app while incorporating best practices in the deployment process. The app aimed to provide essential features for managing various aspects of a school's operations.
@@ -76,3 +76,19 @@ The deployment process involved the following steps:
 7. Documentation: Documenting the deployment process, including infrastructure setup, configuration steps, and troubleshooting guidelines.
 
 # Architectural design
+![cappi drawio](https://github.com/Capstone-12/capstone-12/assets/99274632/6a3d63ea-ee15-4c41-b865-ee27f6b74404)
+
+
+# Challenges Faced
+
+
+# Lessons Learned
+
+The project provided valuable learning opportunities for the team members. Key lessons learned include:
+
+1. Importance of Collaboration: Effective communication and collaboration are crucial for successful project execution, particularly in cross-functional teams.
+2. Continuous Testing and Feedback: Regular testing and feedback loops are essential to identify and address issues early
+
+# Conclusion
+
+# Acknowledgments
