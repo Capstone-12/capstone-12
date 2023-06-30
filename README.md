@@ -78,14 +78,31 @@ The deployment process involved the following steps:
 ![cappi drawio](https://github.com/Capstone-12/capstone-12/assets/99274632/6a3d63ea-ee15-4c41-b865-ee27f6b74404)
 
 # Deployed Application
+### Backend
+![WhatsApp Image 2023-06-30 at 21 49 04](https://github.com/Capstone-12/capstone-12/assets/99274632/6a66bff0-fc77-4c80-9698-821c607ba33d)
+
+### Frontend
+![WhatsApp Image 2023-06-30 at 19 43 05](https://github.com/Capstone-12/capstone-12/assets/99274632/adc7029a-e196-43ff-9b55-ad7e5e7f7ac0)
+
+# Monitoring with prometheus and grafana
+### CPU Usage
+![WhatsApp Image 2023-06-30 at 21 00 13](https://github.com/Capstone-12/capstone-12/assets/99274632/d9ae0869-6f06-4fc0-ac1d-53f50b63c370)
+
+#### Speed/Availability
+![WhatsApp Image 2023-06-30 at 21 44 20](https://github.com/Capstone-12/capstone-12/assets/99274632/6addc443-ecdd-4e4e-86cb-03a9ea57bf9c)
+
+#### Node
+![image](https://github.com/Capstone-12/capstone-12/assets/99274632/362dc262-6d9b-485e-a282-c0f155d4105e)
 
 
 # Lessons Learned
 The project provided valuable learning opportunities for the team members. Key lessons learned include:
-
 1. Importance of Collaboration: Effective communication and collaboration are crucial for successful project execution, particularly in cross-functional teams.
 2. Continuous Testing and Feedback: Regular testing and feedback loops are essential to identify and address issues early
 
+
 # Conclusion
+We are glad that we finally graduated from ALTSCHOOL AFRICA
 
 # Acknowledgments
+Special thanks to God, Our tutors: Kunrad, Valentine and Abuango for the opportunity to learn and grow. Special thanks to Altschool Africa
